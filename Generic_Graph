@@ -1,0 +1,56 @@
+#include<iostream>
+#include<list>
+#include<map>
+using namespace std;
+
+template<typename T>
+
+class Graph{
+
+	map<T,list<T>> adjList;
+
+public:
+
+	Graph(){}
+
+	void addedge(T u, T v,bool bidirect=true){
+		adjList[u].push_back(v);
+		
+		if(bidirect){
+			adjList[v].push_back(u);
+		}
+	}
+
+	void print(){
+		for(auto i:adjList){
+			cout<<i.first<<"-->";
+			for(auto entry :i.second){
+				cout<<entry<<",";
+			}
+			cout<<endl;
+		}
+	}
+};
+
+int main(int argc, char const *argv[])
+{
+	Graph<string> g;
+
+	g.addedge("putin","modi",false);        ////Bidirectional not needed
+	g.addedge("putin","pope",false);
+	g.addedge("putin","trump",false);
+	g.addedge("modi","trump");
+	g.addedge("modi","yogi");
+	g.addedge("yogi","prabhu",false);
+	g.addedge("yogi","modi",false);
+
+	g.print();
+	
+	return 0;
+}
+
+//output ==>
+// modi-->trump,yogi,
+// putin-->modi,pope,trump,
+// trump-->modi,
+// yogi-->modi,prabhu,modi,
